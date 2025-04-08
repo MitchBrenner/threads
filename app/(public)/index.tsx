@@ -9,7 +9,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Threads</Text>
+      <Text>Threads App</Text>
     </View>
   );
 }
