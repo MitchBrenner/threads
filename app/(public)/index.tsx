@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { useSSO } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
+import { useCallback } from "react";
 import {
   Image,
   ScrollView,
@@ -9,9 +10,65 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import * as AuthSession from "expo-auth-session";
 
 export default function Index() {
   const { startSSOFlow } = useSSO();
+
+  const handleFacebookLogin = useCallback(async () => {
+    try {
+      // Start the authentication process by calling `startSSOFlow()`
+      const { createdSessionId, setActive, signIn, signUp } =
+        await startSSOFlow({
+          strategy: "oauth_facebook",
+          // For web, defaults to current path
+          // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
+          // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
+          redirectUrl: AuthSession.makeRedirectUri(),
+        });
+
+      // If sign in was successful, set the active session
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      } else {
+        // If there is no `createdSessionId`,
+        // there are missing requirements, such as MFA
+        // Use the `signIn` or `signUp` returned from `startSSOFlow`
+        // to handle next steps
+      }
+    } catch (err) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      console.error(JSON.stringify(err, null, 2));
+    }
+  }, []);
+
+  const handleGoogleLogin = useCallback(async () => {
+    try {
+      // Start the authentication process by calling `startSSOFlow()`
+      const { createdSessionId, setActive, signIn, signUp } =
+        await startSSOFlow({
+          strategy: "oauth_google",
+          // For web, defaults to current path
+          // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
+          // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
+          redirectUrl: AuthSession.makeRedirectUri(),
+        });
+      // If sign in was successful, set the active session
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      } else {
+        // If there is no `createdSessionId`,
+        // there are missing requirements, such as MFA
+        // Use the `signIn` or `signUp` returned from `startSSOFlow`
+        // to handle next steps
+      }
+    } catch (err) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      console.error(JSON.stringify(err, null, 2));
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -22,7 +79,11 @@ export default function Index() {
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>How would you like to use Threads?</Text>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.loginButton}>
+          {/* INSTAGRAM LOGIN Button */}
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleFacebookLogin}
+          >
             <View style={styles.loginButtonContent}>
               <Image
                 source={require("@/assets/images/instagram-icon.webp")}
@@ -44,7 +105,11 @@ export default function Index() {
               recommendations.
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton}>
+          {/* GOOGLE LOGIN BUTTON */}
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleGoogleLogin}
+          >
             <View style={styles.loginButtonContent}>
               <Text style={styles.loginButtonText}>Continue with Google</Text>
               <Ionicons
