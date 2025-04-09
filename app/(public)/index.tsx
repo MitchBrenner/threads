@@ -11,6 +11,8 @@ import {
   View,
 } from "react-native";
 import * as AuthSession from "expo-auth-session";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function Index() {
   const { startSSOFlow } = useSSO();
@@ -69,6 +71,9 @@ export default function Index() {
       console.error(JSON.stringify(err, null, 2));
     }
   }, []);
+
+  const data = useQuery(api.users.getAllUsers);
+  console.log("DATA", data);
 
   return (
     <View style={styles.container}>

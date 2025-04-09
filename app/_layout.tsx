@@ -1,5 +1,5 @@
 import { Slot, SplashScreen, Stack } from "expo-router";
-import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
+import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { LogBox } from "react-native";
 import {
@@ -9,6 +9,12 @@ import {
   DMSans_700Bold,
 } from "@expo-google-fonts/dm-sans";
 import { useEffect } from "react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+  unsavedChangesWarning: false,
+});
 
 // this will ignore the warning about clerk
 LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys"]);
@@ -45,7 +51,9 @@ export default function RootLayout() {
       tokenCache={tokenCache}
     >
       <ClerkLoaded>
-        <InitialLayout />
+        <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+          <InitialLayout />
+        </ConvexProviderWithClerk>
       </ClerkLoaded>
     </ClerkProvider>
   );
