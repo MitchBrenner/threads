@@ -72,9 +72,6 @@ export default function Index() {
     }
   }, []);
 
-  const data = useQuery(api.users.getAllUsers);
-  console.log("DATA", data);
-
   return (
     <View style={styles.container}>
       <Image
