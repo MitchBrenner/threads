@@ -1,4 +1,11 @@
-import { Slot, SplashScreen, Stack } from "expo-router";
+import {
+  Redirect,
+  Slot,
+  SplashScreen,
+  Stack,
+  useRouter,
+  useSegments,
+} from "expo-router";
 import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { LogBox } from "react-native";
@@ -12,15 +19,15 @@ import { useEffect } from "react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 
+// prevent auto hide of the splash screen
+SplashScreen.preventAutoHideAsync();
+
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
   unsavedChangesWarning: false,
 });
 
 // this will ignore the warning about clerk
 LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys"]);
-
-// prevent auto hide of the splash screen
-SplashScreen.preventAutoHideAsync();
 
 const clerkPublishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -33,12 +40,32 @@ const InitialLayout = () => {
     DMSans_700Bold,
   });
 
+  const { isLoaded, isSignedIn } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
   // this will hide the splash screen when the fonts are loaded
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  });
+  }, [fontsLoaded]);
+  // this will redirect to the auth page if the user is not authenticated?
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const inAuthGroup = segments[0] === "(auth)";
+
+    if (isSignedIn && !inAuthGroup) {
+      router.replace("/(auth)/(tabs)/feed");
+    } else if (!isSignedIn && inAuthGroup) {
+      router.replace("/(public)");
+    }
+
+    console.log("segment", segments);
+    console.log("isSignedIn", isSignedIn);
+  }, [isSignedIn]);
 
   return <Slot />;
 };
