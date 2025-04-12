@@ -1,9 +1,39 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@/constants/Colors";
+import { useAuth } from "@clerk/clerk-expo";
+import * as Haptics from "expo-haptics";
+
+const styles = StyleSheet.create({
+  createIconContainer: {
+    backgroundColor: Colors.itemBackground,
+    padding: 6,
+    borderRadius: 8,
+  },
+});
+
+const CreateTabIcon = ({
+  color,
+  size,
+  focused,
+}: {
+  color: string;
+  size: number;
+  focused: boolean;
+}) => {
+  return (
+    <View style={styles.createIconContainer}>
+      <Ionicons name="add" color={color} size={size} />
+    </View>
+  );
+};
 
 const Layout = () => {
+  const { signOut } = useAuth();
+  const router = useRouter();
+
   return (
     <Tabs
       screenOptions={{
@@ -55,7 +85,28 @@ const Layout = () => {
           headerShown: false,
         }}
       />
-      <Tabs.Screen name="create" options={{}} />
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: "Create",
+          tabBarIcon: ({
+            color,
+            size,
+            focused,
+          }: {
+            color: string;
+            size: number;
+            focused: boolean;
+          }) => <CreateTabIcon color={color} size={size} focused={focused} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            // Haptics.selectionAsync();
+            router.push("/(modal)/create");
+          },
+        }}
+      />
       <Tabs.Screen
         name="favorites"
         options={{
@@ -96,6 +147,11 @@ const Layout = () => {
               size={size}
               color={color}
             />
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={() => signOut()}>
+              <Ionicons name="log-out" size={24} />
+            </TouchableOpacity>
           ),
         }}
       />
