@@ -12,8 +12,8 @@ export const doSomething = httpAction(async (ctx, request) => {
       // Handle user created event
       await ctx.runMutation(internal.users.createUser, {
         clerkId: data.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        first_name: data.first_name,
+        last_name: data.last_name,
         email: data.email_addresses[0].email_address,
         imageUrl: data.image_url,
         username: data.username,
