@@ -18,11 +18,7 @@ const Layout = () => {
           presentation: "modal",
           title: "New Thread",
           headerRight: () => (
-            <TouchableOpacity
-              onPress={() => {
-                // Handle save action
-              }}
-            >
+            <TouchableOpacity onPress={() => {}}>
               <Ionicons name="ellipsis-horizontal-circle" size={24} />
             </TouchableOpacity>
           ),

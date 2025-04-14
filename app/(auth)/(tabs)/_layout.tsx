@@ -9,8 +9,12 @@ import * as Haptics from "expo-haptics";
 const styles = StyleSheet.create({
   createIconContainer: {
     backgroundColor: Colors.itemBackground,
-    padding: 6,
+    padding: 0,
     borderRadius: 8,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // minWidth: 40, // or size + 2 * padding
+    // minHeight: 40,
   },
 });
 
@@ -24,9 +28,14 @@ const CreateTabIcon = ({
   focused: boolean;
 }) => {
   return (
-    <View style={styles.createIconContainer}>
-      <Ionicons name="add" color={color} size={size} />
-    </View>
+    // <View style={styles.createIconContainer}>
+    <Ionicons
+      name="add"
+      color={color}
+      size={size}
+      style={styles.createIconContainer}
+    />
+    // </View>
   );
 };
 
@@ -132,7 +141,7 @@ const Layout = () => {
         name="profile"
         options={{
           title: "Profile",
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({
             color,
             size,
@@ -147,11 +156,6 @@ const Layout = () => {
               size={size}
               color={color}
             />
-          ),
-          headerRight: () => (
-            <TouchableOpacity onPress={() => signOut()}>
-              <Ionicons name="log-out" size={24} />
-            </TouchableOpacity>
           ),
         }}
       />

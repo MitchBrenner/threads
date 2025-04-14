@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import * as Sentry from "@sentry/react-native";
 
 const Page = () => {
   return (
-    <View>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>FEED Page</Text>
     </View>
   );
