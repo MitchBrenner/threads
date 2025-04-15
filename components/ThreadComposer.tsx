@@ -117,10 +117,22 @@ const ThreadComposer = ({
     return storageId;
   };
 
-  const pickImage = async () => {};
-
   return (
-    <View>
+    <TouchableOpacity
+      onPress={() => {
+        router.push("/(auth)/(modal)/create");
+      }}
+      style={
+        isPreview && {
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          height: 100,
+          pointerEvents: "box-only",
+        }
+      }
+    >
       <Stack.Screen
         options={{
           headerLeft: () => (
@@ -222,7 +234,7 @@ const ThreadComposer = ({
           </TouchableOpacity>
         </View>
       </InputAccessoryView>
-    </View>
+    </TouchableOpacity>
   );
 };
 
