@@ -4,7 +4,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { Colors } from "@/constants/Colors";
+import { Link } from "expo-router";
 
 type userProfileProps = {
   userId?: string;
@@ -43,9 +43,22 @@ const UserProfile = ({ userId }: userProfileProps) => {
       <View style={styles.buttonRow}>
         {isSelf && (
           <>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Edit Profile</Text>
-            </TouchableOpacity>
+            <Link
+              href={`/(modal)/edit-profile?biostring=${
+                profile?.bio ? encodeURIComponent(profile?.bio) : ""
+              }&linkstring=${
+                profile?.websiteUrl
+                  ? encodeURIComponent(profile?.websiteUrl)
+                  : ""
+              }&userId=${
+                profile?._id
+              }&imageUrl=${profile?.imageUrl ? encodeURIComponent(profile?.imageUrl) : ""}`}
+              asChild
+            >
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Edit Profile</Text>
+              </TouchableOpacity>
+            </Link>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Share Profile</Text>
             </TouchableOpacity>
@@ -132,11 +145,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     color: "white",
-  },
-  tabContentText: {
-    fontSize: 18,
-    color: Colors.border,
-    textAlign: "center",
-    marginTop: 16,
   },
 });

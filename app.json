@@ -35,14 +35,6 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      [
-        "@sentry/react-native/expo",
-        {
-          "organization": "mitchbrenner",
-          "project": "threads",
-          "url": "https://sentry.io/"
-        }
-      ],
       "expo-font"
     ],
     "experiments": {

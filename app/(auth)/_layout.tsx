@@ -1,9 +1,11 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 const Layout = () => {
+  const router = useRouter();
+
   return (
     <Stack
       screenOptions={{
@@ -18,8 +20,20 @@ const Layout = () => {
           presentation: "modal",
           title: "New Thread",
           headerRight: () => (
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => router.dismiss()}>
               <Ionicons name="ellipsis-horizontal-circle" size={24} />
+            </TouchableOpacity>
+          ),
+        }}
+      />{" "}
+      <Stack.Screen
+        name="(modal)/edit-profile"
+        options={{
+          presentation: "modal",
+          title: "Edit Profile",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.dismiss()}>
+              <Text>Cancel</Text>
             </TouchableOpacity>
           ),
         }}
