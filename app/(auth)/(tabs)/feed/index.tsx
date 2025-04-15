@@ -1,6 +1,5 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import * as Sentry from "@sentry/react-native";
 
 const Page = () => {
   return (
