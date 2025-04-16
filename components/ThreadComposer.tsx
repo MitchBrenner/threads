@@ -209,6 +209,16 @@ const ThreadComposer = ({
               />
             </TouchableOpacity>
           </View>
+          {!isPreview && !isReply && (
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={styles.submitButton}
+            >
+              <Text style={[styles.submitButtonText, { alignSelf: "center" }]}>
+                Post
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity
           onPress={removeThread}

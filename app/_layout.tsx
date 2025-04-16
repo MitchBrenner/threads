@@ -51,6 +51,7 @@ const InitialLayout = () => {
     }
   }, [fontsLoaded]);
   // this will redirect to the auth page if the user is not authenticated?
+  // if (!isLoaded) return null; // or loading spinner
 
   useEffect(() => {
     if (!isLoaded) return;
