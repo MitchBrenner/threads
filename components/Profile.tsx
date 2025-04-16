@@ -6,34 +6,53 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { Id } from "@/convex/_generated/dataModel";
+import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAuth } from "@clerk/clerk-expo";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import UserProfile from "./UserProfile";
 import { User } from "@/convex/schema";
 import Tabs from "./Tabs";
+import { api } from "@/convex/_generated/api";
+import { usePaginatedQuery } from "convex/react";
+import Thread from "./Thread";
 
 type ProfileProps = {
   userId?: Id<"users">;
   showBackButton?: boolean;
 };
 
-const Profile = ({ userId, showBackButton = false }: ProfileProps) => {
+const Profile = ({ userId, showBackButton }: ProfileProps) => {
   const { userProfile } = useUserProfile();
 
   const { top } = useSafeAreaInsets();
   const { signOut } = useAuth();
   const router = useRouter();
 
+  const { results, status, loadMore } = usePaginatedQuery(
+    api.messages.getThreads,
+    { userId: userId || userProfile?._id },
+    {
+      initialNumItems: 5,
+    }
+  );
+
   return (
     <View style={[styles.container, { paddingTop: top }]}>
       <FlatList
-        data={[]}
-        renderItem={({ item }) => <Text>Test</Text>}
+        data={results}
+        renderItem={({ item }) => (
+          <Link href={`/(auth)/(tabs)/feed/${item._id}`} asChild>
+            <TouchableOpacity>
+              <Thread
+                thread={item as Doc<"messages"> & { creator: Doc<"users"> }}
+              />
+            </TouchableOpacity>
+          </Link>
+        )}
         ListEmptyComponent={
           <Text style={styles.tabContentText}>
             You haven't posted anything yet

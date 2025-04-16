@@ -25,12 +25,24 @@ const Layout = () => {
             </TouchableOpacity>
           ),
         }}
-      />{" "}
+      />
       <Stack.Screen
         name="(modal)/edit-profile"
         options={{
           presentation: "modal",
           title: "Edit Profile",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.dismiss()}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="(modal)/reply/[id]"
+        options={{
+          presentation: "modal",
+          title: "Reply",
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.dismiss()}>
               <Text>Cancel</Text>
