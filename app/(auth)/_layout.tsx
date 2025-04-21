@@ -2,9 +2,11 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { usePush } from "@/hooks/usePush";
 
 const Layout = () => {
   const router = useRouter();
+  usePush();
 
   return (
     <Stack
