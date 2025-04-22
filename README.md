@@ -1,58 +1,71 @@
-# Welcome to your Expo app 👋
+# Threads Clone
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform mobile app inspired by Threads (by Instagram), built using **React Native**, **Expo Router**, **Convex**, and **Clerk** for authentication. This clone replicates core social features like threaded conversations, profile management, and interactive UI, all optimized for iOS, Android, and Web via Expo.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+- Authentication via Clerk
+- Secure, user-based data storage and retrieval
+- Post threads and view other users' content
+- Upload media with the native image picker
+- Tab-based navigation and gesture support
+- Real-time updates and notifications
+- Clean UI with custom fonts and smooth animations
+- Expo dev client support for native module testing
 
-2. Start the app
+  
+---
 
-   ```bash
-    npx expo start
-   ```
+<div>
+<img src="assets/images/home.PNG" alt="Home Screen" width="300"/>
+<img src="assets/images/post.PNG" alt="Post Screen" width="300"/>
+<img src="assets/images/profile.PNG" alt="Profile Screen" width="300"/>
+</div>
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📱 Built With
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Core Frameworks & Tools
 
-## Get a fresh project
+- **Expo** – Fast mobile development with access to native APIs
+- **React Native** – Cross-platform mobile UI
+- **Expo Router** – File-based routing for React Native apps
+- **Convex** – Full-stack backend with real-time database and reactive queries
+- **Clerk** – Drop-in authentication and user management for Expo
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## 📦 Notable Libraries
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- **@clerk/clerk-expo** – Secure authentication and user context
+- **expo-image-picker** – For uploading images in threads
+- **expo-notifications** – Push notification support
+- **expo-blur, expo-haptics, expo-secure-store** – Enhancing UX and storing tokens
+- **react-native-reanimated & gesture-handler** – Smooth animations and interactions
+- **@expo/vector-icons** – Icon set integration
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🧠 Architecture
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- **Expo Router** is used for navigation with nested route layouts
+- **Convex** handles backend logic, real-time data sync, and file storage
+- **Clerk** manages auth, user sessions, and token handling
+- **State is managed locally** through context and props
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 📲 Platform Support
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- iOS
+- Android
+- Web (via Expo for Web)
 
-### Fonts
+> Uses `expo-dev-client` for testing native modules on simulators and real devices.
 
-Using google fonts
+---
 
-```bash
-npx expo install @expo-google-fonts/dm-sans expo-font
-```
+Built to explore full-stack mobile development using modern tooling and a file-based routing experience in React Native.
